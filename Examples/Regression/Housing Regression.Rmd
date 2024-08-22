@@ -5,8 +5,9 @@ date: "`r Sys.Date()`"
 output: md_document
 ---
 
-```{r}
+```{r, warning=FALSE}
 library(readr)
+library(dplyr)
 house_prices <- read_csv("house_prices.csv")
 
 
@@ -42,13 +43,10 @@ house_prices$`Carpet Area` <- sapply(house_prices$`Carpet Area`, convert_to_sqft
 
 
 head(house_prices)
-
-library(ggplot2)
 ```
-We need to remove some of our large outliers which may skew the data
+We need to remove some of our outliers which may skew the data
 ```{r}
-#There are some large outliers in our data, so we need to remove them
-
+library(ggplot2)
 price_ceil <- quantile(house_prices$`Price (in rupees)`, 0.98)
 area_ceil <- quantile(house_prices$`Carpet Area`,0.98)
 
