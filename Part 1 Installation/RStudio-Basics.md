@@ -1,4 +1,4 @@
-\#R User Interface
+# R User Interface
 
 When opening RStudio for the first time, a window will appear on your
 screen like this figure
@@ -10,30 +10,31 @@ screen like this figure
 
 Notice there are three boxes, the Console, Environment and Files.
 
-\##Console
+## Console
 
 The console is used to execute commands in R. Anything that can be ran
 in R can be ran here.
 
-\##Environment
+## Environment
 
 The environment shows any active variables in the workspace. You can use
 commands in the console in order to add and modify the active variables
 in the session. These environmental variables can be saved in the
 workspace.
 
-\##File These are files that are in the environment. They can hold
-useful files like scripts, csvs and more. You can put files into the
-current folder by clicking blank file, then adding those files.
-Alternatively, you can drag an outside file inside of the current folder
-R is working in. Note that files inside the explorer are not
-automatically added to the workspace and you need to use a command to
-add them in such as
+## File
+
+These are files that are in the environment. They can hold useful files
+like scripts, csvs and more. You can put files into the current folder
+by clicking blank file, then adding those files. Alternatively, you can
+drag an outside file inside of the current folder R is working in. Note
+that files inside the explorer are not automatically added to the
+workspace and you need to use a command to add them in such as
 
     setwd("your/Current/Directory")
     data <- read.csv("your file.csv", header = TRUE, sep = ",")
 
-\##R Scripts
+## R Scripts
 
 R Scripts hold code that can be ran. Like code in the console, running
 code in an RScript modifies the active workspace by adding or modifying
@@ -45,7 +46,7 @@ highlighting the section you want to run, then clicking run, RStudio
 will execute only the highlighted lines of code instead of the entire
 program.
 
-\##R Markdown
+## R Markdown
 
 RMarkdown (.rmd) files are a special type of file that allows code to be
 ran in a visually appealing manner. Basically, RMarkdown files
