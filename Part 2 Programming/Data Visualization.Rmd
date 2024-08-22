@@ -1,0 +1,100 @@
+---
+title: "Data Visualization"
+author: "Tiep Nguyen"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Data Visualization
+
+There are many ways to visualize data in R. This tutorial will teach you about ggplot2, which is one of the most commonly used libraries for visualization. Let's use the flights dataset again.
+
+```{r}
+if (!requireNamespace("ggplot2", quietly = TRUE)) { # checks if the package is in the namespace.
+    install.packages("ggplot2")
+}
+library("ggplot2")
+
+if (!requireNamespace("nycflights13", quietly = TRUE)) { # checks if the package is in the namespace.
+    install.packages("nycflights13")
+}
+library("nycflights13")
+
+head(flights)
+```
+
+In order to create a ggplot, we start off with an empty ggplot before adding graphs to that canvas
+
+```{r}
+ggplot(data = flights) +
+  geom_point(mapping = aes(x = distance, y = air_time))
+```
+
+Essentially, whenever we create a ggplot we need to create a coordinate system from the data through ggplot. Then we can add layers to our ggplot through functions like geom_point or geom_line. 
+
+```{r}
+
+ggplot(data = flights) +
+  geom_point(mapping = aes(x = distance, y = air_time)) +
+  geom_smooth(mapping = aes(x = distance, y = air_time))
+```
+
+# Aesthetic Mappings
+
+Notice how in each of our geom functions we have a parameter of mapping taking in an object of class aes. The aesthetic class controls how our graph looks based off of the data we provide to it.
+
+```{r}
+
+ggplot(data = flights) +
+  geom_point(mapping = aes(x = distance, y = air_time, color = dest))
+```
+By mapping the color to a variable, we can see more clearly that most of the flights with same/similar distances come from the same area.
+
+We can also declare the color of a ggplot outside of the aesthetic if you simply want to change the color of the graph unconditionally.
+
+```{r}
+
+ggplot(data = flights) +
+  geom_point(mapping = aes(x = distance, y = air_time), color = "blue")
+```
+# Facet
+
+We can add facets to ggplot. Facets are subplots in our data, which display a subset of our data. 
+
+In order to facet your plot by a single variable, use facet_wrap(). The first argument of facet_wrap() should be a formula (created with ~) followed by the variable name. The variable in facet_wrap() you provide MUST be discrete.
+
+```{r}
+
+ggplot(data = flights) +
+  geom_point(mapping = aes(x = distance, y = air_time,color = dest)) +
+  facet_wrap(~origin, nrow = 3)
+```
+# Types of Geoms
+
+Geoms, short for Geometric Object, control what kind of visual object is used to represent the data. For example, bar charts use bar geoms, line charts use line geoms and so on (scatter plots use the point geom). Data can be described with different geoms to represent them.
+
+```{r}
+ggplot(data = flights) +
+  geom_boxplot(mapping = aes(x = distance, y = air_time,color = origin))
+```
+
+Here we use a box and whiskers plot instead of a scatter plot to convey our data.
+
+Every geom function in ggplot2 takes a mapping argument. However, not every aesthetic works with every geom. For example, you can set the shape of a point with the shape parameter in the aesthetic.
+
+``` {r, warning=FALSE}
+ggplot(data = flights) +
+  geom_point(mapping = aes(x = distance, y = air_time, shape = origin), color = "blue")
+```
+
+However, setting the shape of a line will return an error because line does not take shape as a valid parameter for its aesthetics.
+
+#Statistical Transformations
+
+One of the most comonly used graph is a bar graph. Bar graphs can be made with the geom_bar()
+``` {r}
+ggplot(data = flights) +
+  geom_bar(mapping = aes(x = origin))
+```
+
+Notice how the Y axis is count, which is derived from information in our data. 

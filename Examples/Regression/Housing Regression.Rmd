@@ -1,0 +1,72 @@
+---
+title: "What is the relationship between the square footage and housing price?"
+author: "Tiep Nguyen"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+library(readr)
+house_prices <- read_csv("house_prices.csv")
+
+
+#Remove NA values
+
+house_prices <- filter(house_prices, !is.na(`Carpet Area`), !is.na(`Price (in rupees)` )) 
+
+conversion_factors <- c(
+  sqft = 1,
+  sqm = 10.7639,
+  sqyrd = 9,
+  acre = 43560,
+  ground = 2400,
+  bigha = 27000,  # assuming the size of a bigha as used in some regions
+  marla = 272.25,
+  kanal = 5445
+)
+
+# Our column is characters with differing units, so we must convert it to numerics.
+convert_to_sqft <- function(area_string) {
+ 
+  parts <- strsplit(area_string, " ")[[1]]
+  value <- as.numeric(parts[1])
+  unit <- parts[2]
+  
+  value_in_sqft <- value * conversion_factors[[unit]]
+  return(value_in_sqft)
+}
+
+house_prices$`Carpet Area` <- sapply(house_prices$`Carpet Area`, convert_to_sqft)
+
+
+
+
+head(house_prices)
+
+library(ggplot2)
+```
+We need to remove some of our large outliers which may skew the data
+```{r}
+#There are some large outliers in our data, so we need to remove them
+
+price_ceil <- quantile(house_prices$`Price (in rupees)`, 0.98)
+area_ceil <- quantile(house_prices$`Carpet Area`,0.98)
+
+house_prices_no_outliers <- filter(house_prices, `Price (in rupees)` < price_ceil, `Carpet Area` < area_ceil)
+```
+
+Perform the regression
+```{r}
+model <- lm(`Price (in rupees)` ~ `Carpet Area`, data = house_prices_no_outliers)
+summary(model)
+```
+Our R-squared is low, so a linear regression is not a good fit for our data.
+
+#Visualization
+```{r}
+
+
+ggplot(data = house_prices_no_outliers) + 
+  geom_point(mapping = aes(x = `Carpet Area`, y = `Price (in rupees)`), alpha = 0.05) + # we set a low alpha (transparency) for easier visualization
+  geom_smooth(method = "lm", mapping = aes(x = `Carpet Area`, y = `Price (in rupees)`))
+```

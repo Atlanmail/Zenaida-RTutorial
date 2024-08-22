@@ -1,0 +1,47 @@
+---
+title: "Guide to Installing RStudio"
+author: "Tiep Nguyen"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Introduction
+In order to run statistical analysis using R, you will need to install both R and RStudio.
+
+# Prerequisites
+
+Before installing RStudio, you need to have R installed on your system. You can download and install R from [The Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/).
+
+## Steps to Install R
+
+1. Visit the [CRAN download page](https://cran.r-project.org/).
+2. Select your operating system (Windows, macOS, or Linux).
+3. Follow the instructions provided for your operating system to download and install R.
+
+# Installing RStudio
+
+Once you have R installed, follow these steps to install RStudio.
+
+## For Windows
+
+1. Go to the [RStudio download page](https://posit.co/download/rstudio-desktop/).
+2. Under the "RStudio Desktop" section, click the "Download" button for the open-source edition.
+3. Choose the Windows installer (`.exe` file).
+4. Once downloaded, double-click the installer to begin the installation process.
+5. Follow the on-screen instructions to complete the installation.
+6. After installation, launch RStudio from the Start menu or desktop shortcut.
+
+## For macOS
+
+1. Visit the [RStudio download page](https://posit.co/download/rstudio-desktop/).
+2. Under the "RStudio Desktop" section, click the "Download" button for the open-source edition.
+3. Select the macOS installer (`.dmg` file).
+4. Open the downloaded `.dmg` file and drag the RStudio icon into your Applications folder.
+5. Launch RStudio from the Applications folder or Spotlight search.
+
+## For Linux/Ubuntu
+Honestly, if you use Linux you don't really need a tutorial
+
+1. Visit the [RStudio download page](https://posit.co/download/rstudio-desktop/).
+2. Under the "RStudio Desktop" section, click the "Download" button for the open-source edition.
+3. Select the Ubuntu installer for your system.

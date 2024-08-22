@@ -1,0 +1,30 @@
+---
+title: "Is the average BMI of an olympic athlete different by country?"
+author: "Tiep Nguyen"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+#Load in the dataset
+library(readr)
+Olympic_Athlete_Bio <- read_csv("Olympic_Athlete_Bio.csv")
+
+Olympic_Athlete_Bio <- Olympic_Athlete_Bio %>% mutate_at(c('weight'), as.double)
+
+```
+Calculate the BMI
+```{r}
+Olympic_Athlete_Bio$BMI <- Olympic_Athlete_Bio$weight / (Olympic_Athlete_Bio$height/100)^2
+```
+
+Perform the ANOVA Test
+Null Hypothesis: The mean BMI across the countries are the same
+Alt Hypothesis: At least one mean BMI across the countries are different
+
+```{r}
+athlete_bio_aov <- aov(Olympic_Athlete_Bio$BMI~factor(Olympic_Athlete_Bio$country_noc)) 
+summary(athlete_bio_aov)
+```
+
+Because we P value is less than 0.05, we reject the null hypothesis. We accept that at least one mean BMI across the countries are different.

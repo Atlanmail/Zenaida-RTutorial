@@ -1,0 +1,228 @@
+---
+title: "Working with Data"
+author: "Tiep Nguyen"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+
+# Data Types
+All variables store values of a certain data type. The data type tells R what variables are appropriate for what functions. For example, you cannot multiply a character (also known as a string) by a numeric (number). Here are the basic data types below:
+
+* Numeric: Any real number. R uses either integers for whole numbers or floating point numbers for decimals. Examples include "47", "53.0", "-23.2183".
+* Characters: This datatype is used to store text data. In order to define a text as a string, it must be enclosed in either single ('Hello') or double quotations ("World").
+* Logical: This datatype represents boolean values, which are TRUE or FALSE.
+* Complex: This datatype represents imaginary numbers. It is composed of two numbers, the real part and the imaginary part. Complex numbers are not often used, but are necessary in certain calculations. Examples include "9 + 3i", "1.5 + 2i", "-5 - 1.5i".
+* Factors: This datatype is for categorical objects. They represent a group of possible values for a certain category. For example, a factor could be a set of colors like "Red", "Yellow", "Green" etc. while another category could be "Freshman", "Sophomore", "Junior" etc. Factors can be ordinal (order) or nominal (no order), which can be useful for data manipulation.
+
+
+
+# Vectors and Data Frames
+
+Vectors are a list of objects of the same data type. Similar to arrays in other programming languages, they are indexed, so you can access the elements in that list by order (note that vectors are 1 indexed unlike in other programming languages which are 0 indexed)
+
+Dataframes are similar to vectors, but instead they are 2d, similar to a matrix. Unlike lists, the entirety of their values are not the same data type - rather, only values in the same column are required to be the same data type.
+
+Each column in a dataframe has a name. For each column, each index corresponding to a particular row or observation. 
+
+Dataframes can be manually created similar to variables. We can use the head() function to preview them, as well as the view() function.
+```{r} 
+  name_data <- data.frame(
+    Name = c("Alice", "Bob", "Charlie"),
+    Age = c(25, 30, 35),
+    Score = c(90, 85, 88)
+  )
+  
+  head(name_data)
+```
+However, most dataframes you work with are usually imported from another source, like a .csv or .xlsx file.
+
+# Importing Data
+
+There are two ways of importing data through a direct import or through commands.
+
+By clicking on file in the toolbar then import dataset, click on the correct option corresponding to the file import. Then you can put in the file url or location in order to import the dataset. 
+
+This creates a new dataframe in the environment you can work on. This dataframe can be accessed in scripts by simply calling its name.
+
+You can also import data through commands through read_excel, read_csv or other functions depending on the file extension.
+```{r, eval = FALSE} 
+  data <- read_excel("path/to/your/file.xlsx")
+```
+Note that the default directory is the directory your script is in.
+
+# Manipulating data frame basics
+
+Dataframes are essentially arrays of vectors. Values of a dataframe can be accessed by column
+```{r}
+print(name_data$Name)
+print(name_data[,"Name"])
+```
+Values of a dataframe can also be accessed by row (R uses a 1 index)
+```{r}
+print(name_data[1, ])
+```
+Rows can be subsetted as well, meaning that a new dataframe of selected rows and columns will be returned
+```{r}
+print(name_data[1:2, c("Name", "Age")])
+```
+# Dplyr
+
+Dplyr is one of the most commonly used dataframe manipulation libraries, which allows for filtering, selection and more useful functions. In order to use all dplyr functions, you must use
+```{r}
+if (!requireNamespace("dplyr", quietly = TRUE)) { # checks if the package is in the namespace.
+    install.packages("dplyr")
+}
+library("dplyr")
+```
+
+# Filter
+
+Dplyr has a filter() function that allows you to subset rows based off of their values. The first argument of filter is the name of your dataframe, then following parameters are conditions the rows must pass. For example, we can select all the students with a score of over 85 with
+
+```{r}
+
+filtered_frame <- filter(name_data, Score > 85)
+head(filtered_frame)
+```
+Filtering allows us to work with missing and incomplete values. Take the NYC flights dataset.
+```{r}
+
+if (!requireNamespace("nycflights13", quietly = TRUE)) { # checks if the package is in the namespace.
+    install.packages("nycflights13")
+}
+library("nycflights13")
+
+head(flights)
+```
+
+This dataset contains missing or incomplete values. We can remove the rows with missing values like with functions below.
+```{r}
+head(
+  filter(flights, if_any(everything(), is.na))
+)
+```
+R considers NA values to be values that exist, but their values are unknown. Attempting to run most logical operators with NA values will often return NA
+
+```{r, results='hold'}
+print(NA > 5) # returns NA
+print(NA == 10) # returns NA
+print(NA + 10) # returns NA
+print(NA * 2) # returns NA
+print(NA * 0) # returns NA
+
+
+print(NA == NA) # NA is simply a value R is not sure of. This means that it cannot confirm if one unknown value is equal to another unknown
+```
+Because we cannot use NA == NA, we need to use the function is.na(value) in order to check if something is NA.
+
+# Arrange
+
+Arrange is the dplyr function that allows for changing the order of rows. It takes in a dataframe as its first parameter, and multiple columns in subsequent parameters. By default, it orders the rows in descending order by first column, then second column and so on.
+
+```{r}
+head(
+  arrange(flights, year, month, day)
+)
+```
+By default items are sorted in ascending order. You can use desc() in order to make the order be descending instead.
+
+```{r}
+head(
+  arrange(flights, year, month, desc(day))
+)
+```
+# Select
+
+Select is a dplyr function that allows you to create a dataframe with only selected columns. It's similar to previous methods of selecting columns, but allows for reordering column names.
+
+```{r}
+
+head(
+  select(flights, carrier, year, month, day)
+)
+```
+
+If you want to reorder the columns so that a few specific columns are in front, you can use the everything() helper to get the remaining columns.
+
+```{r}
+
+head(
+  select(flights, carrier, year, month, day, everything())
+)
+```
+# Mutate
+
+Sometimes you will need to add new columns based off existing columns. For example, you might want to add the average speed (km/h) of a plane. We can do so with the mutate function
+
+```{r}
+head(
+  mutate(flights,
+    speed = distance / air_time * 60 # we multiply by 60 bc air_time is in minutes       
+  )
+)
+```
+This appends a new "speed" column to the end of our dataframe with values equal to the formula we gave it. If we want to create a new dataframe entirely, we can simply use transmute.
+
+```{r}
+head(
+  transmute(flights,
+    speed = distance / air_time * 60 # we multiply by 60 bc air_time is in minutes       
+  )
+)
+```
+Not only that, we can create new variables using values of columns we are mutating.
+```{r}
+head(
+  transmute(flights,
+    gain = dep_delay - arr_delay,
+    speed = distance / air_time * 60, # we multiply by 60 bc air_time is in minutes
+    gain_speed = gain * speed,
+  )
+)
+```
+We are not only limited to the basic arithmetic functions. We can use any function in the environment when mutating dataframes.
+
+# Group by
+
+Group by allows you to create a group rows in an existing dataframe. Basically, functions are then applied on each group of rows as if they were their own dataframe until the dataframe is ungrouped.
+
+Lets say you wanted to find the mean flight delay.
+
+```{r}
+summarise(flights, delay = mean(dep_delay, na.rm = TRUE))
+```
+This returns the mean flight delay for all flights. However, what if we wanted the mean flight delay for everything on the same day? We would need to use group_by() to do so.
+```{r}
+by_day <- group_by(flights, year, month, day)
+summarise(by_day, delay = mean(dep_delay, na.rm = TRUE))
+```
+This returns the mean delay for each day of the year through grouped data.
+
+# Removing NA
+Note that because NA pollutes most functions, we can opt to remove it. All of dplyr's transformation functions have a na.rm parameter which can be set to TRUE in order to prevent them from running arithmetic on NA values.
+
+```{r}
+summarise(flights, delay = mean(dep_delay, na.rm = TRUE))
+summarise(flights, delay = mean(dep_delay, na.rm = FALSE))
+```
+
+# The Pipe Operator
+In other notebooks using dplyr you will often see people use the %>%, like so.
+```{r, eval=FALSE}
+flights %>%
+  select(carrier, year, month, day, everything()) %>%
+  arrange(year, month, desc(day))
+```
+which is equivalent to
+```{r, eval=FALSE}
+flights <- select(flights,carrier,year,month,day,everything())
+flights <- arrange(flights, year, month, desc(day))
+```
+
+Basically, the pipe operator is an alternative to repeatedly typing in the dataframe parameter over and over. Proponents of the pipe say that coding this way is more readable - however, because it only available the dplyr/tidyverse, I personally do not use it because the pipe does not work for functions outside of those libraries and thus leads to inconsistent coding patterns. Regardless of whether or not you will use the pipe, it is still important to understand what it does in case others do use it.
+
+
+
+
+

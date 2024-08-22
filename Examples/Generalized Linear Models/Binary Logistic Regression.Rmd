@@ -1,0 +1,220 @@
+---
+title: "Binary Logistic Regression"
+author: "Tiep Nguyen"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+Logistic regression is used when you want to predict either the presence of the absence of a certain characteristic based on the values of the predictor variables. It is similar to a linear regression, however the binary logistic regression predicts if the dependent variable will be either one value or another.
+
+# Example
+
+What characteristics lead to heart disease?
+
+Import our dataset
+```{r, warning=FALSE}
+library(readr)
+heart_2022_no_nans <- read_csv("heart_2022_no_nans.csv")
+head(heart_2022_no_nans)
+```
+# Clean our dataset
+```{r, results='hide', message=FALSE, warning=FALSE}
+library(dplyr)
+
+cleaned_heart <- heart_2022_no_nans
+```
+We cannot use categorical variables like Sex, AlcoholDrinkers or SmokerStatus, so we convert them to factors in order to create dummy variables. We set their orders so that 0 indicates the absence of the factor, and the greatest level is the most extreme version of the factor
+
+```{r}
+cleaned_heart$SmokerStatus <- trimws(cleaned_heart$SmokerStatus)
+cleaned_heart$SmokerStatus <- factor(cleaned_heart$SmokerStatus,
+                                        levels = c("Never smoked",
+                                                   "Former smoker",
+                                                   "Current smoker - now smokes some days",
+                                                   "Current smoker - now smokes every day"
+                                                   ))
+cleaned_heart$Sex <- factor(cleaned_heart$Sex,
+                              levels = c("Female", "Male"))
+
+cleaned_heart$AlcoholDrinkers <- trimws(cleaned_heart$AlcoholDrinkers)
+cleaned_heart$AlcoholDrinkers <- factor(cleaned_heart$AlcoholDrinkers,
+                                       levels = c("No", "Yes"))
+
+### Remaining cleanup code hidden, see .rmd for implementation
+```
+```{r echo=FALSE}
+
+cleaned_heart$HadHeartAttack <- trimws(cleaned_heart$HadHeartAttack)
+cleaned_heart$HadHeartAttack <- factor(cleaned_heart$HadHeartAttack,
+                                       levels = c("No", "Yes"))
+cleaned_heart$HighRiskLastYear <- factor(cleaned_heart$HighRiskLastYear,
+                                       levels = c("No", "Yes"))
+
+cleaned_heart$GeneralHealth <- factor(cleaned_heart$GeneralHealth,
+                                      level = c("Poor", "Fair", "Good", "Very good", "Excellent"))
+cleaned_heart$LastCheckupTime <- factor(cleaned_heart$LastCheckupTime,
+                                        level = c("Within past year (anytime less than 12 months ago)",
+                                                  "Within past 2 years (1 year but less than 2 years ago)",
+                                                  "Within past 5 years (2 years but less than 5 years ago)",
+                                                  "5 or more years ago"))
+cleaned_heart$PhysicalActivities <- factor(cleaned_heart$PhysicalActivities,
+                                           levels = c("No", "Yes"))
+cleaned_heart$RemovedTeeth <- factor(cleaned_heart$RemovedTeeth,
+                                     c("None of them", "1 to 5", "6 or more, but not all", "All"))
+
+cleaned_heart$HadAngina <- factor(cleaned_heart$HadAngina,
+                                       levels = c("No", "Yes"))
+cleaned_heart$HadStroke <- factor(cleaned_heart$HadStroke,
+                                       levels = c("No", "Yes"))
+cleaned_heart$HadAsthma <- factor(cleaned_heart$HadAsthma,
+                                       levels = c("No", "Yes"))
+cleaned_heart$HadSkinCancer <- factor(cleaned_heart$HadSkinCancer,
+                                       levels = c("No", "Yes"))
+cleaned_heart$HadCOPD <- factor(cleaned_heart$HadCOPD,
+                                       levels = c("No", "Yes"))
+cleaned_heart$HadDepressiveDisorder <- factor(cleaned_heart$HadDepressiveDisorder,
+                                       levels = c("No", "Yes"))
+cleaned_heart$HadKidneyDisease <- factor(cleaned_heart$HadKidneyDisease,
+                                       levels = c("No", "Yes"))
+cleaned_heart$HadArthritis <- factor(cleaned_heart$HadArthritis,
+                                       levels = c("No", "Yes"))
+cleaned_heart$HadDiabetes <- factor(cleaned_heart$HadDiabetes,
+                                       levels = c("No", "Yes"))
+cleaned_heart$DeafOrHardOfHearing <- factor(cleaned_heart$DeafOrHardOfHearing,
+                                       levels = c("No", "Yes"))
+cleaned_heart$BlindOrVisionDifficulty <- factor(cleaned_heart$BlindOrVisionDifficulty,
+                                       levels = c("No", "Yes"))
+cleaned_heart$DifficultyConcentrating <- factor(cleaned_heart$DifficultyConcentrating,
+                                       levels = c("No", "Yes"))
+cleaned_heart$DifficultyWalking <- factor(cleaned_heart$DifficultyWalking,
+                                       levels = c("No", "Yes"))
+cleaned_heart$DifficultyDressingBathing <- factor(cleaned_heart$DifficultyDressingBathing,
+                                       levels = c("No", "Yes"))
+cleaned_heart$DifficultyErrands <- factor(cleaned_heart$DifficultyErrands,
+                                       levels = c("No", "Yes"))
+cleaned_heart$ECigaretteUsage <- factor(cleaned_heart$ECigaretteUsage,
+                                       levels = c("Never used e-cigarettes in my entire life",
+                                                  "Not at all (right now)", 
+                                                  "Use them some days",
+                                                  "Use them every day"))
+cleaned_heart$ChestScan <- factor(cleaned_heart$ChestScan,
+                                       levels = c("No", "Yes"))
+cleaned_heart$AgeCategory <- factor(cleaned_heart$AgeCategory,
+                                       levels = c("Age 18 to 24", 
+                                                  "Age 25 to 29",
+                                                  "Age 30 to 34",
+                                                  "Age 35 to 39",
+                                                  "Age 40 to 44",
+                                                  "Age 45 to 49",
+                                                  "Age 50 to 54",
+                                                  "Age 55 to 59",
+                                                  "Age 60 to 64",
+                                                  "Age 65 to 69",
+                                                  "Age 70 to 74",
+                                                  "Age 75 to 79",
+                                                  "Age 80 or older"))
+
+cleaned_heart$HIVTesting <- factor(cleaned_heart$HIVTesting,
+                                   levels = c("No", "Yes"))
+cleaned_heart$FluVaxLast12 <- factor(cleaned_heart$FluVaxLast12,
+                                   levels = c("No", "Yes"))
+cleaned_heart$PneumoVaxEver <- factor(cleaned_heart$PneumoVaxEver,
+                                      levels = c("No", "Yes"))
+cleaned_heart$TetanusLast10Tdap <- factor(cleaned_heart$TetanusLast10Tdap,
+                                          levels = c("Yes, received Tdap",
+                                                     "Yes, received tetanus shot but not sure what type",
+                                                     "Yes, received tetanus shot, but not Tdap",
+                                                     "No, did not receive any tetanus shot in the past 10 years"))
+
+cleaned_heart$CovidPos <- factor(cleaned_heart$CovidPos,
+                                      levels = c("No", "Yes"))
+
+```
+
+In order to avoid overfitting, we split our data set into a training dataset. We will use the caret package to do so. Then we can run the logistic model through glm. We use family = binomial() because our dependent variable, HadHeartAttack is binary (yes or no)
+
+```{r, message=FALSE, warning=FALSE}
+require(caret)
+
+
+index <- createDataPartition(cleaned_heart$HadHeartAttack, p = .2, list = FALSE) # splits the data into groups. 20% goes to training
+train <- cleaned_heart[index, ]
+test <- cleaned_heart[-index, ]
+
+logistic_model <- glm(HadHeartAttack ~ ., family = binomial(), train)
+```
+
+Basically, a logistic regression is an equation in the form of 
+$$
+
+b(x) = \frac{\exp(b_0 + b_1 x_1 + b_2 x_2 + \dots + b_k x_k)}{1 + \exp(b_0 + b_1 x_1 + b_2 x_2 + \dots + b_k x_k)}
+
+$$
+
+```{r}
+summary(logistic_model)
+```
+# Interpreting the output
+
+Each of the variables have a p value. If the p values are below certain values (usually 0.05), we declare them as significant. Consider HadStrokeYes, which has a P value of less than 0.01. We can say there is a significant correlation between having a stroke and having a heart attack. Compare that to someone who received a Tetanus shot, having a p value in between 0.7 and 0.9. It seems there is no significant correlation between the getting a shot and getting a heart attack.
+
+# Interpretting Accuracy
+We evaluate the accuracy of our model by having it predict values in both the test and training dataset. Then we use a classification table in order find the differences between the actual values and the prediction
+
+```{r}
+threshold <- 0.5 # Threshold is how confident we are when we want to declare the likelihood of a heart attack
+```
+
+```{r}
+pred_train_prob <- predict(logistic_model, train, type = "response")
+
+train$pred_heartattack <- factor(
+  ifelse(pred_train_prob >= threshold, "Yes", "No"),
+  levels = c("Yes", "No")
+)
+# Generating the classification tables
+ctab_train <- confusionMatrix(train$HadHeartAttack, train$pred_heartattack)
+```
+
+```{r}
+pred_test_prob <- predict(logistic_model, test, type = "response")
+
+test$pred_heartattack <- factor(
+  ifelse(pred_test_prob >= threshold, "Yes", "No"),
+  levels = c("Yes", "No")
+)
+# Generating the classification tables
+ctab_test <- confusionMatrix(test$HadHeartAttack, test$pred_heartattack)
+```
+```{r}
+print("Confusion Matrix Train")
+print(ctab_train)
+print("Confusion Matrix Test")
+print(ctab_test)
+```
+
+The classification tables we generate give us several important values.
+
+- Accuracy: This is the success rate of our model. Basically, accuracy is the number of correct predictions divided by the total number of predictions.
+
+- Sensitivity: This is the 'true positive rate'. Basically, it is the proportion of correct true positives divided by the total number of predicted positives. 
+
+- Specificity: This is the true negative rate for predictions. It is the number of true negatives divided by the total number of predicted negatives. 
+
+- Pos Pred Value: This is the rate of successful positive predictions. It is calculated by the number of true predicted positives divided by the number of positives in the dataset.
+
+- Neg Pred Val: This is the rate of successful negative predictions. It is calculated by the number of true negatives divided by the number of negatives in the dataset.
+
+Notice we also have two classification tables: one showing the comparison between our training data and our test data. If the values change too much from training to test data (e.g our model is much less accurate for our test data than training data), it can be an indication of overfitting, meaning certain variables have an overestimated effect.
+
+Ideally, for each of these categories, we should try to make them as high as possible. This tutorial does not cover data preprocessing, which are techniques which can be used to restructure our data in order to produce a higher quality model.
+
+
+## Sources/further reading
+
+Dataset: https://www.kaggle.com/datasets/kamilpytlak/personal-key-indicators-of-heart-disease
+
+https://online.stat.psu.edu/stat462/node/207/
+https://www.ibm.com/docs/en/spss-statistics/beta?topic=regression-binary-logistic
+https://medium.com/analytics-vidhya/machine-learning-ii-logistic-regression-explained-data-pre-processing-hands-on-kaggle-728e6a9d4bbf
+https://utsavdesai26.medium.com/demystifying-classification-evaluation-metrics-accuracy-precision-recall-and-more-613dc7cc44b2
