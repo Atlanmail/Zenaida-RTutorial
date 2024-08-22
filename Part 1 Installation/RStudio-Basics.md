@@ -4,7 +4,7 @@ When opening RStudio for the first time, a window will appear on your
 screen like this figure
 
 <figure>
-<img src="DefaultScreen.png" alt="The default interface" />
+<img src="DefaultScreen.PNG" alt="The default interface" />
 <figcaption aria-hidden="true">The default interface</figcaption>
 </figure>
 

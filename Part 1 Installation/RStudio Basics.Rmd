@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 When opening RStudio for the first time, a window will appear on your screen like this figure
 
-![The default interface](DefaultScreen.png)
+![The default interface](DefaultScreen.PNG)
 
 Notice there are three boxes, the Console, Environment and Files.
 
