@@ -2,7 +2,7 @@
 title: "Table of Contents"
 author: "Tiep Nguyen"
 date: "`r Sys.Date()`"
-output: html_document
+output: md_document
 ---
 
 

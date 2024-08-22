@@ -2,7 +2,7 @@
 title: "Is the average BMI of an olympic athlete different by country?"
 author: "Tiep Nguyen"
 date: "`r Sys.Date()`"
-output: html_document
+output: md_document
 ---
 
 ```{r}

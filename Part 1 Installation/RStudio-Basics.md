@@ -1,0 +1,58 @@
+\#R User Interface
+
+When opening RStudio for the first time, a window will appear on your
+screen like this figure
+
+<figure>
+<img src="DefaultScreen.png" alt="The default interface" />
+<figcaption aria-hidden="true">The default interface</figcaption>
+</figure>
+
+Notice there are three boxes, the Console, Environment and Files.
+
+\##Console
+
+The console is used to execute commands in R. Anything that can be ran
+in R can be ran here.
+
+\##Environment
+
+The environment shows any active variables in the workspace. You can use
+commands in the console in order to add and modify the active variables
+in the session. These environmental variables can be saved in the
+workspace.
+
+\##File These are files that are in the environment. They can hold
+useful files like scripts, csvs and more. You can put files into the
+current folder by clicking blank file, then adding those files.
+Alternatively, you can drag an outside file inside of the current folder
+R is working in. Note that files inside the explorer are not
+automatically added to the workspace and you need to use a command to
+add them in such as
+
+    setwd("your/Current/Directory")
+    data <- read.csv("your file.csv", header = TRUE, sep = ",")
+
+\##R Scripts
+
+R Scripts hold code that can be ran. Like code in the console, running
+code in an RScript modifies the active workspace by adding or modifying
+existing variables.
+
+Unlike other programming languages, RStudio allows us to run individual
+lines of code or sections of code instead of the entire program. By
+highlighting the section you want to run, then clicking run, RStudio
+will execute only the highlighted lines of code instead of the entire
+program.
+
+\##R Markdown
+
+RMarkdown (.rmd) files are a special type of file that allows code to be
+ran in a visually appealing manner. Basically, RMarkdown files
+automatically generate readable HTML files from code chunks, making them
+useful for generating reports and presenting your data. This web page
+was generated from a RMarkdown for example.
+
+An RMarkdown file consists of three parts: A YAML header, which is used
+to generate the title R code chunks, which is surrounded by \`\`\` Text
+annotated with Markdown
