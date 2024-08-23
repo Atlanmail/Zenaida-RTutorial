@@ -1,7 +1,7 @@
 ---
 title: "Table of Contents"
 author: "Tiep Nguyen"
-date: "`r Sys.Date()`"
+date: "r Sys.Date()"
 output: md_document
 ---
 
@@ -17,20 +17,20 @@ Here are a list of contents
 
 ### Part 1: Installation
 
-[Installation](`\Part%201%20Installation\Installation.md`)
+[Installation](\Part 1 Installation\Installation.md)
 
-[RStudio Basics](`\Part%201%20Installation\RStudio%20Basics.md`)
+[RStudio Basics](\Part 2 Installation\RStudio Basics.md)
 
 ### Part 2: Programming
 
-[Basics of R](`\Part%202%20Programming\Basics%20of%20R.md`)
+[Basics of R](\Part 2 Programming\Basics-of-R.md)
 
-[Data Visualization](`\Part%202%20Programming\Data%20Visualization.md`)
+[Data Visualization](\Part 2 Programming\Data Visualization.md)
 
-[Working with Data](`\Part%202%20Programming\Working%20with%20Data.md`)
+[Working with Data](\Part 2 Programming\Working with Data.md)
 
 ### Part 3: Examples
 
-[Linear Regression](`\Examples\Regression\Housing-Regression.md`)
-[Anova Analysis](`\Examples\Anova Analysis\ANOVA.md`)
-[Binary Logistric Regression](`\Examples\Generalized Linear Models\Binary-Logistic-Regression.md`)
+[Linear Regression](\Examples\Regression\Housing-Regression.md)
+[Anova Analysis](\Examples\Anova Analysis\ANOVA.md)
+[Binary Logistric Regression](\Examples\Generalized Linear Models\Binary-Logistic-Regression.md)
