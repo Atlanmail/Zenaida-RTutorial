@@ -5,8 +5,9 @@ date: "`r Sys.Date()`"
 output: md_document
 ---
 
-```{r}
+```{r, warning=FALSE}
 #Load in the dataset
+library(dplyr)
 library(readr)
 Olympic_Athlete_Bio <- read_csv("Olympic_Athlete_Bio.csv")
 

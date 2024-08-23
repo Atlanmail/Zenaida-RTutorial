@@ -1,8 +1,23 @@
 ---
-title: "Table of Contents"
+title: "Welcome"
 author: "Tiep Nguyen"
 date: "`r Sys.Date()`"
 output: md_document
 ---
+
+# Introduction
+Hey! This is an RStudio tutorial designed to quickly get you up to speed in order to do basic statistical analysis.
+
+These tutorials are appropriate for those with some programming experience and minimal RStudio experience.
+
+Here are a list of contents
+
+## Contents
+
+### Part 1: Installation
+
+### Part 2: Programming
+
+### Part 3: Examples
 
 
