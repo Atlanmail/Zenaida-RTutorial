@@ -9,6 +9,8 @@ output: md_document
 
 Hey! This is an RStudio tutorial designed to quickly get you up to speed in order to do basic statistical analysis.
 
+You can view this on either github or by opening the files in RStudio.
+
 These tutorials are appropriate for those with some programming experience and minimal RStudio experience.
 
 Here are a list of contents
@@ -32,5 +34,7 @@ Here are a list of contents
 ### Part 3: Examples
 
 [Linear Regression](Examples/Regression/Housing-Regression.md)
+
 [Anova Analysis](Examples/Anova Analysis/ANOVA.md)
+
 [Binary Logistric Regression](Examples/Generalized Linear Models/Binary-Logistic-Regression.md)
