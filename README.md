@@ -12,20 +12,19 @@ Here are a list of contents
 
 ### Part 1: Installation
 
-[Installation](/Part%201%20Installation/Installation.md)
+[Installation](%60\Part%201%20Installation\Installation%60)
 
-[RStudio Basics](Part%202%20Installation/RStudio%20Basics.md)
+[RStudio Basics](%60\Part%201%20Installation\RStudio%20Basics%60)
 
 ### Part 2: Programming
 
-[Basics of R](Part%202%20Programming/Basics-of-R.md)
+[Basics of R](%60\Part%202%20Programming\Basics%20of%20R%60)
 
-[Data Visualization](Part%202%20Programming/Data%20Visualization.md)
+[Data Visualization](%60\Part%202%20Programming\Data%20Visualization%60)
 
-[Working with Data](Part%202%20Programming/Working%20with%20Data.md)
+[Working with Data](%60\Part%202%20Programming\Working%20with%20Data)
 
 ### Part 3: Examples
 
-[Linear Regression](Examples/Regression/Housing-Regression.md) [Anova
-Analysis](Examples/Anova%20Analysis/ANOVA.md) [Binary Logistric
-Regression](Examples/Generalized%20Linear%20Models/Binary-Logistic-Regression.md)
+[Linear Regression](%60\Examples\Regression\Housing-Regression%60)
+
