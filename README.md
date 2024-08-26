@@ -27,7 +27,9 @@ Here are a list of contents
 ### Part 3: Examples
 
 [Linear Regression](https://github.com/Atlanmail/Zenaida-RTutorial/blob/73400068b90c12c7019b8cce17114cda12d91958/Examples/Regression/Housing-Regression.md)
+
 [ANOVA Analysis](https://github.com/Atlanmail/Zenaida-RTutorial/blob/73400068b90c12c7019b8cce17114cda12d91958/Examples/ANOVA%20Analysis/ANOVA.md)
-[Binary Logistic Regression(https://github.com/Atlanmail/Zenaida-RTutorial/blob/73400068b90c12c7019b8cce17114cda12d91958/Examples/Generalized%20Linear%20Models/Binary-Logistic-Regression.md)
+
+[Binary Logistic Regression](https://github.com/Atlanmail/Zenaida-RTutorial/blob/73400068b90c12c7019b8cce17114cda12d91958/Examples/Generalized%20Linear%20Models/Binary-Logistic-Regression.md)
 
 
