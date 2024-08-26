@@ -18,11 +18,11 @@ Here are a list of contents
 
 ### Part 2: Programming
 
-[Basics of R](/Part-2-Programming/Basics of R)
+[Basics of R](/Part-2-Programming/Basics-of-R)
 
-[Data Visualization](/Part-2-Programming/Data Visualization)
+[Data Visualization](/Part-2-Programming/Data-Visualization)
 
-[Working with Data](/Part-2-Programming/Working with Data)
+[Working with Data](/Part-2-Programming/Working-with-Data)
 
 ### Part 3: Examples
 
