@@ -12,17 +12,17 @@ Here are a list of contents
 
 ### Part 1: Installation
 
-[Installation](/Part%201%20Installation\Installation)
+[Installation](/Part 1 Installation\Installation)
 
-[RStudio Basics](/Part%201%20Installation\RStudio%20Basics)
+[RStudio Basics](/Part 1 Installation\RStudio Basics)
 
 ### Part 2: Programming
 
-[Basics of R](/Part%202%20Programming\Basics%20of%20R)
+[Basics of R](/Part 2 Programming\Basics of R)
 
-[Data Visualization](/Part%202%20Programming\Data%20Visualization)
+[Data Visualization](/Part 2 Programming\Data Visualization)
 
-[Working with Data](/Part%202%20Programming\Working%20with%20Data)
+[Working with Data](/Part 2 Programming\Working with Data)
 
 ### Part 3: Examples
 
