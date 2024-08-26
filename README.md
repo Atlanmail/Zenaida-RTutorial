@@ -12,19 +12,19 @@ Here are a list of contents
 
 ### Part 1: Installation
 
-[Installation](/Part-1-Installation/Installation)
+[Installation](</Part 1 Installation/Installation>)
 
-[RStudio Basics](/Part-1-Installation/RStudio-Basics)
+[RStudio Basics](</Part 1 Installation/RStudio Basics>)
 
 ### Part 2: Programming
 
-[Basics of R](/Part-2-Programming/Basics-of-R)
+[Basics of R](</Part 2 Programming/Basics of R>)
 
-[Data Visualization](/Part-2-Programming/Data-Visualization)
+[Data Visualization](</Part 2 Programming/Data Visualization>)
 
-[Working with Data](/Part-2-Programming/Working-with-Data)
+[Working with Data](</Part 2 Programming/Working with Data>)
 
 ### Part 3: Examples
 
-[Linear Regression](/Examples/Regression/Housing-Regression)
+[Linear Regression](</Examples/Regression/Housing-Regression>)
 
