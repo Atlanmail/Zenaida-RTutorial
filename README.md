@@ -14,7 +14,7 @@ Here are a list of contents
 
 [Installation](/Part-1-Installation/Installation)
 
-[RStudio Basics](/Part-1-Installation/RStudio Basics)
+[RStudio Basics](/Part-1-Installation/RStudio-Basics)
 
 ### Part 2: Programming
 
